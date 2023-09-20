@@ -3,61 +3,21 @@ package main;
 import inputs.KeyboardInputs;
 import inputs.MouseInputs;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
-import static utils.Constants.PlayerConstants.*;
-import static utils.Constants.Directions.*;
 public class GamePanel extends JPanel {
 
     private MouseInputs mouseInputs;
-    private float xDelta = 100, yDelta = 100;
-    private BufferedImage img, subImg;
-    private BufferedImage[][] animations;
-    private int animationTick, animationIndex, animationSpeed = 15;
-    private int playerAction = IDLE;
-    private int playerDir = -1;
-    private boolean moving = false;
+    private Game game;
 
-    public GamePanel() {
+    public GamePanel(Game game) {
+        this.game = game;
         mouseInputs = new MouseInputs(this);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-
         setPanelSize();
-        importImg();
-        loadAnimations();
-    }
-
-    private void loadAnimations() {
-        animations = new BufferedImage[9][6];
-        for (int j = 0; j < animations.length; j++) {
-            for (int i = 0; i < animations[j].length; i++) {
-                animations[j][i] = img.getSubimage(i * 64, j*40, 64, 40);
-            }
-        }
-
-    }
-
-    private void importImg() {
-        InputStream inputStream = getClass().getResourceAsStream("/player_sprites.png");
-
-        try {
-            img = ImageIO.read(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     private void setPanelSize() {
@@ -67,76 +27,16 @@ public class GamePanel extends JPanel {
         setMaximumSize(size);
     }
 
-    public void setDirection(int direction) {
-        this.playerDir = direction;
-        moving = true;
-    }
+    public void updateGame() {
 
-    public void setMoving(boolean moving) {
-        this.moving = moving;
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        g.drawImage(animations[playerAction][animationIndex], (int) xDelta, (int) yDelta, 256, 160, null);
+        game.render(g);
     }
 
-
-    private void updateAnimationTick() {
-        animationTick++;
-        if (animationTick >= animationSpeed) {
-            animationTick = 0;
-            animationIndex++;
-            if (animationIndex >= GetSpriteAmount(playerAction)) {
-                animationIndex = 0;
-            }
-        }
+    public Game getGame() {
+        return game;
     }
-    private void setAnimation() {
-        if (moving)
-            playerAction = RUNNING;
-        else
-            playerAction = IDLE;
-    }
-
-    private void updatePos() {
-        if (moving) {
-            switch (playerDir) {
-                case LEFT:
-                    xDelta -= 5;
-                    break;
-                case UP:
-                    yDelta -= 5;
-                    break;
-                case RIGHT:
-                    xDelta += 5;
-                    break;
-                case DOWN:
-                    yDelta += 5;
-                    break;
-            }
-        }
-    }
-
-    public void updateGame() {
-        updateAnimationTick();
-        setAnimation();
-        updatePos();
-    }
-
-    public void changeXDelta(int value) {
-        this.xDelta += value;
-    }
-
-    public void changeYDelta(int value) {
-        this.yDelta += value;
-    }
-
-    public void setRectPosition(int x, int y) {
-        this.xDelta = x;
-        this.yDelta = y;
-    }
-
-
 }
