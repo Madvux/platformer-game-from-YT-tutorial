@@ -82,6 +82,8 @@ public class PauseOverlay {
     }
 
     public void draw(Graphics g) {
+        g.setColor(new Color(0,0,0,150));
+        g.fillRect(0,0,Game.GAME_WIDTH,Game.GAME_HEIGHT);
         g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
 
         musicButton.draw(g);

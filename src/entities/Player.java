@@ -44,8 +44,9 @@ public class Player extends Entity {
         setAnimation();
     }
 
-    public void render(Graphics g) {
-        g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
+    public void render(Graphics g, int lvlOffset) {
+        g.drawImage(animations[playerAction][animationIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+
     }
 
     private void loadAnimations() {
@@ -98,14 +99,15 @@ public class Player extends Entity {
         moving = false;
 
         if (jump) jump();
-        if (!left && !right && !inAir) return;
+        if (!inAir)
+            if ((!left && !right) || (right && left)) return;
 
         float xSpeed = 0;
 
         if (left) xSpeed -= playerSpeed;
         if (right) xSpeed += playerSpeed;
 
-        if(!inAir)
+        if (!inAir)
             if (!isEntityOnFloor(hitbox, lvlData)) inAir = true;
 
         if (inAir) {
