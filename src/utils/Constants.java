@@ -1,11 +1,11 @@
 package utils;
 
+import entities.Crabby;
 import main.Game;
 
 public class Constants {
     public static class EnemyConstants {
         public static final int CRABBY = 0;
-
         public static final int IDLE = 0;
         public static final int RUNNING = 1;
         public static final int ATTACK = 2;
@@ -17,6 +17,9 @@ public class Constants {
 
         public static final int CRABBY_WIDTH = (int) (CRABBY_WIDTH_DEFAULT * Game.SCALE);
         public static final int CRABBY_HEIGHT = (int) (CRABBY_HEIGHT_DEFAULT * Game.SCALE);
+
+        public static final int CRABBY_DRAW_OFFSET_X = (int) (26 * Game.SCALE);
+        public static final int CRABBY_DRAW_OFFSET_Y = (int) (9 * Game.SCALE);
 
         public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 
