@@ -58,6 +58,14 @@ public abstract class Entity {
         return false;
     }
 
+    protected boolean isTileSolid(int xTile, int yTile, int[][] lvlData) {
+        int value = lvlData[yTile][xTile];
+
+        if (value >= 48 || value < 0 || value != 11)
+            return true;
+        return false;
+    }
+
     protected float getEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
         int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
         if (xSpeed > 0) {
@@ -103,8 +111,28 @@ public abstract class Entity {
      * bottomright for the right direction. But it wont have big effect in the game. The enemy will simply change
      * direction sooner when there is an edge on the right side of the enemy, when its going right.
      */
-    public boolean isFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
+    protected boolean isFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
         return isSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
     }
 
+    protected boolean isAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
+        for (int i = 0; i < xEnd - xStart; i++) {
+            if (isTileSolid(xStart + i, y, lvlData))
+                return false;
+            if (!isTileSolid(xStart + i, y + 1, lvlData))
+                return false;
+        }
+
+        return true;
+    }
+    protected boolean isSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
+        int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
+        int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
+
+        if (firstXTile > secondXTile)
+            return isAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
+        else
+            return isAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
+
+    }
 }
