@@ -27,10 +27,12 @@ public class LoadSave {
     public static final String URM_BUTTONS = "urm_buttons.png";
     public static final String VOLUME_BUTTONS = "volume_buttons.png";
 
-    //playing background
+    //playing ui
     public static final String PLAYING_BG_IMG = "playing_bg_img.png";
     public static final String BIG_CLOUDS = "big_clouds.png";
     public static final String SMALL_CLOUDS = "small_clouds.png";
+    public static final String STATUS_BAR = "health_power_bar.png";
+
 
     //enemies
     public static final String CRABBY_SPRITE = "crabby_sprite.png";
