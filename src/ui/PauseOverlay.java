@@ -18,9 +18,9 @@ public class PauseOverlay {
 
     private Playing playing;
     private BufferedImage backgroundImg;
-    private int bgX,bgY,bgW,bgH;
-    private SoundButton musicButton,sfxButton;
-    private UrmButton menuB,replayB,unpauseB;
+    private int bgX, bgY, bgW, bgH;
+    private SoundButton musicButton, sfxButton;
+    private UrmButton menuB, replayB, unpauseB;
     private VolumeButton volumeButton;
 
     public PauseOverlay(Playing playing) {
@@ -82,8 +82,8 @@ public class PauseOverlay {
     }
 
     public void draw(Graphics g) {
-        g.setColor(new Color(0,0,0,150));
-        g.fillRect(0,0,Game.GAME_WIDTH,Game.GAME_HEIGHT);
+        g.setColor(new Color(0, 0, 0, 150));
+        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
         g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
 
         musicButton.draw(g);
@@ -132,8 +132,10 @@ public class PauseOverlay {
                 playing.unpauseGame();
             }
         } else if (isIn(e, replayB)) {
-            if (replayB.isMousePressed())
-                System.out.println("replay lvl!");
+            if (replayB.isMousePressed()) {
+                playing.resetAll();
+                playing.unpauseGame();
+            }
         } else if (isIn(e, unpauseB)) {
             if (unpauseB.isMousePressed())
                 playing.unpauseGame();

@@ -105,14 +105,11 @@ public abstract class Entity {
         return true;
     }
 
-    /**
-     * We just check the bottomleft of the enemy here +/- the xSpeed. We never check bottom right in case the
-     * enemy is going to the right. It would be more correct checking the bottomleft for left direction and
-     * bottomright for the right direction. But it wont have big effect in the game. The enemy will simply change
-     * direction sooner when there is an edge on the right side of the enemy, when its going right.
-     */
     protected boolean isFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
-        return isSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
+        if (xSpeed > 0)
+            return isSolid(hitbox.x + xSpeed + hitbox.width, hitbox.y + hitbox.height + 1, lvlData);
+        else
+            return isSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
     }
 
     protected boolean isAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
@@ -125,6 +122,7 @@ public abstract class Entity {
 
         return true;
     }
+
     protected boolean isSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
         int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
         int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
