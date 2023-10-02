@@ -94,14 +94,6 @@ public class LoadSave {
 
             }
 
-//        for (File f: files) {
-//            System.out.println(f.getName());
-//        }
-//        for (File f: filesSorted) {
-//            System.out.println(f.getName());
-//        }
-//        return null;
-
         BufferedImage[] imgs = new BufferedImage[filesSorted.length];
 
         for (int i = 0; i < imgs.length; i++)
@@ -120,8 +112,7 @@ public class LoadSave {
             for (int i = 0; i < img.getWidth(); i++) {
                 Color color = new Color(img.getRGB(i, j));
                 int value = color.getRed();
-                if (value >= 48)
-                    value = 0;
+                if (value >= 48)  value = 0;
                 lvlData[j][i] = value;
             }
         return lvlData;
