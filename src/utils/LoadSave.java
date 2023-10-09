@@ -4,6 +4,7 @@ import entities.Crabby;
 import main.Game;
 import objects.GameContainer;
 import objects.Potion;
+import objects.Spike;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -47,6 +48,7 @@ public class LoadSave {
     //objects
     public static final String POTION_ATLAS = "potions_sprites.png";
     public static final String CONTAINER_ATLAS = "objects_sprites.png";
+    public static final String TRAP_ATLAS = "trap_atlas.png";
 
     public static BufferedImage GetSpriteAtlas(String fileName) {
 
@@ -157,6 +159,20 @@ public class LoadSave {
                 int value = color.getBlue();
                 if (value == BOX || value == BARREL)
                     list.add(new GameContainer(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+            }
+
+        return list;
+    }
+
+    public static ArrayList<Spike> GetSpikes(BufferedImage img) {
+        ArrayList<Spike> list = new ArrayList<>();
+
+        for (int j = 0; j < img.getHeight(); j++)
+            for (int i = 0; i < img.getWidth(); i++) {
+                Color color = new Color(img.getRGB(i, j));
+                int value = color.getBlue();
+                if (value == SPIKE)
+                    list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
             }
 
         return list;

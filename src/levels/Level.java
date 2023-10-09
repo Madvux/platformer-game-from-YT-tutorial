@@ -4,6 +4,7 @@ import entities.Crabby;
 import main.Game;
 import objects.GameContainer;
 import objects.Potion;
+import objects.Spike;
 import utils.LoadSave;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class Level {
     private int[][] lvlData;
     private ArrayList<Crabby> crabs;
     private ArrayList<Potion> potions;
+    private ArrayList<Spike> spikes;
     private ArrayList<GameContainer> containers;
     private int lvlTilesWide;
     private int maxTilesOffset;
@@ -30,9 +32,15 @@ public class Level {
         createEnemies();
         createPotions();
         createContainers();
+        createSpikes();
         calcLvlOffsets();
         calcPlayerSpawn();
     }
+
+    private void createSpikes() {
+        spikes = LoadSave.GetSpikes(img);
+    }
+
     private void createContainers() {
         containers = LoadSave.GetContainers(img);
     }
@@ -86,4 +94,7 @@ public class Level {
         return containers;
     }
 
+    public ArrayList<Spike> getSpikes() {
+        return spikes;
+    }
 }

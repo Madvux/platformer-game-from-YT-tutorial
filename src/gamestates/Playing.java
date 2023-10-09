@@ -153,6 +153,10 @@ public class Playing extends State implements StateMethods {
         objectManager.checkObjectHit(attackBox);
     }
 
+    public void checkSpikesTouched(Player player) {
+        objectManager.checkSpikesTouched(player);
+    }
+
     public void resetAll() {
         gameOver = false;
         paused = false;
@@ -275,4 +279,10 @@ public class Playing extends State implements StateMethods {
     public ObjectManager getObjectManager() {
         return objectManager;
     }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
+
+
 }
