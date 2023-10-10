@@ -124,6 +124,14 @@ public abstract class Entity {
             return isSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
     }
 
+
+    protected boolean isAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
+        for (int i = 0; i < xEnd - xStart; i++)
+            if (isTileSolid(xStart + i, y, lvlData))
+                return false;
+        return true;
+    }
+
     protected boolean isAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
         for (int i = 0; i < xEnd - xStart; i++) {
             if (isTileSolid(xStart + i, y, lvlData))
