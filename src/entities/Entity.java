@@ -1,6 +1,7 @@
 package entities;
 
 import main.Game;
+import objects.Projectile;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

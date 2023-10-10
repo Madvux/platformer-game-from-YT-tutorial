@@ -92,4 +92,7 @@ public class GameObject {
         return animationIndex;
     }
 
+    public int getAnimationTick() {
+        return animationTick;
+    }
 }
