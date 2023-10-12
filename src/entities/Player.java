@@ -7,6 +7,7 @@ import utils.LoadSave;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 
 import static utils.Constants.GRAVITY;
 import static utils.Constants.ANIMATION_SPEED;
@@ -73,7 +74,16 @@ public class Player extends Entity {
     public void update() {
         updateHealthBar();
         if (currentHealth <= 0) {
-            playing.setGameOver(true);
+            if (state != DEAD) {
+                state = DEAD;
+                animationTick = 0;
+                animationIndex = 0;
+                playing.setPlayerDying(true);
+            } else if (animationIndex == GetSpriteAmount(DEAD) - 1 && animationTick >= ANIMATION_SPEED - 1) {
+                playing.setGameOver(true);
+            } else {
+                updateAnimationTick();
+            }
             return;
         }
 
