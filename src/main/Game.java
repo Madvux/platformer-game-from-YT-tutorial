@@ -1,8 +1,10 @@
 package main;
 
+import gamestates.GameOptions;
 import gamestates.GameState;
 import gamestates.Menu;
 import gamestates.Playing;
+import ui.AudioOptions;
 
 import java.awt.*;
 
@@ -17,6 +19,8 @@ public class Game implements Runnable {
 
     private Playing playing;
     private Menu menu;
+    private GameOptions gameOptions;
+    private AudioOptions audioOptions;
 
     public final static int TILES_DEFAULT_SIZE = 32;
     public final static float SCALE = 2f;
@@ -37,8 +41,10 @@ public class Game implements Runnable {
     }
 
     private void initClasses() {
+        audioOptions = new AudioOptions();
         menu = new Menu(this);
         playing = new Playing(this);
+        gameOptions = new GameOptions(this);
     }
 
     private void startGameLoop() {
@@ -47,23 +53,29 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        switch (GameState.state){
+        switch (GameState.state) {
             case MENU -> {
                 menu.update();
             }
             case PLAYING -> {
                 playing.update();
             }
-            case OPTIONS,QUIT -> {
+            case OPTIONS -> {
+                gameOptions.update();
+            }
+            case QUIT -> {
                 System.exit(0);
             }
         }
     }
 
     public void render(Graphics g) {
-        switch (GameState.state){
+        switch (GameState.state) {
             case MENU -> {
                 menu.draw(g);
+            }
+            case OPTIONS -> {
+                gameOptions.draw(g);
             }
             case PLAYING -> {
                 playing.draw(g);
@@ -113,6 +125,7 @@ public class Game implements Runnable {
         }
 
     }
+
     public void windowFocusLost() {
         if (GameState.state == GameState.PLAYING)
             playing.getPlayer().resetDirectionBooleans();
@@ -124,5 +137,13 @@ public class Game implements Runnable {
 
     public Menu getMenu() {
         return menu;
+    }
+
+    public GameOptions getGameOptions() {
+        return gameOptions;
+    }
+
+    public AudioOptions getAudioOptions() {
+        return audioOptions;
     }
 }
