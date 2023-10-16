@@ -161,4 +161,8 @@ public abstract class Entity {
     public int getAnimationIndex() {
         return animationIndex;
     }
+
+    public int getCurrentHealth() {
+        return currentHealth;
+    }
 }
